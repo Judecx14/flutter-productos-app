@@ -35,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                     //Este sirve para cuando nada más queremos un provider
                     ChangeNotifierProvider(
                       create: (_) => LoginFormProvider(),
-                      child: _LoginForm(),
+                      child: const _LoginForm(),
                     ),
                     const SizedBox(
                       height: 30.0,

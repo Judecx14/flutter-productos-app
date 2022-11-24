@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:productos_app/screens/screens.dart';
-import 'package:productos_app/services/product_service.dart';
 import 'package:productos_app/services/services.dart';
 import 'package:provider/provider.dart';
 
@@ -33,11 +32,11 @@ class MyApp extends StatelessWidget {
       title: 'Productos App',
       initialRoute: 'login',
       routes: {
-        'login': (_) => LoginScreen(),
-        'register': (_) => RegisterScreen(),
-        'checking': (_) => CheckAuthScreen(),
-        'home': (_) => HomeScreen(),
-        'product': (_) => ProductScreen(),
+        'login': (_) => const LoginScreen(),
+        'register': (_) => const RegisterScreen(),
+        'checking': (_) => const CheckAuthScreen(),
+        'home': (_) => const HomeScreen(),
+        'product': (_) => const ProductScreen(),
       },
       scaffoldMessengerKey: NotificacionsService.messengerKey,
       theme: ThemeData.light().copyWith(

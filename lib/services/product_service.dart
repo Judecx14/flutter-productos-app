@@ -7,7 +7,7 @@ import 'package:productos_app/models/models.dart';
 import 'package:http/http.dart' as https;
 
 class ProductService extends ChangeNotifier {
-  final String _baseURL = 'flutter-varios-6da60-default-rtdb.firebaseio.com';
+  final String _baseURL = 'http://192.168.1.3:8000/api/v1';
   final List<Product> products = [];
   bool _isLoading = true;
   bool isSaving = false;
@@ -17,7 +17,7 @@ class ProductService extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   ProductService() {
     loadProducts();
@@ -27,7 +27,7 @@ class ProductService extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     //No es necesario color https en el string porque el metodo lo pone (Https)
-    final url = Uri.https(_baseURL, '/productos.json', {
+    final url = Uri.https(_baseURL, '/products', {
       'auth': await storage.read(key: 'token') ?? '',
     });
     final resp = await https.get(url);
@@ -57,7 +57,7 @@ class ProductService extends ChangeNotifier {
   }
 
   Future<String> updateProduct(Product product) async {
-    final url = Uri.https(_baseURL, '/productos/${product.id}.json', {
+    final url = Uri.https(_baseURL, '/products/${product.id}', {
       'auth': await storage.read(key: 'token') ?? '',
     });
     /* final resp =  */
@@ -68,7 +68,7 @@ class ProductService extends ChangeNotifier {
   }
 
   Future<String> createProduct(Product product) async {
-    final url = Uri.https(_baseURL, '/productos.json', {
+    final url = Uri.https(_baseURL, '/products', {
       'auth': await storage.read(key: 'token') ?? '',
     });
     final resp = await https.post(url, body: product.toJson());
@@ -101,8 +101,6 @@ class ProductService extends ChangeNotifier {
     final stremResponse = await imageUploadRequest.send();
     final resp = await https.Response.fromStream(stremResponse);
     if (resp.statusCode != 200 && resp.statusCode != 201) {
-      print('algo salio mal');
-      print(resp.body);
       return null;
     }
     newPictureFile = null; // Limpiamos esta propiedad
